@@ -84,8 +84,6 @@ public class AssessmentDemoThird {
         System.out.println("Total Checkout Amount is : " + actTotalAmount);
         Assert.assertEquals(expTotalAmount, actTotalAmount);
 
-
-
     }
 
 }

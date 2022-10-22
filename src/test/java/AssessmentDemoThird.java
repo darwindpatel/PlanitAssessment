@@ -32,6 +32,7 @@ public class AssessmentDemoThird {
             driver.findElement(By.xpath("/html/body/div[2]/div/ul/li[7]/div/p/a")).click();
             driver.findElement(By.partialLinkText("Cart")).click();
 
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         //expected error text
         String expStuffedFrog = "$21.98";
         String expPriceStuffedFrog = "$10.99";
@@ -78,10 +79,18 @@ public class AssessmentDemoThird {
         Assert.assertEquals(expValentineBear, actValentineBear);
         Assert.assertEquals(expPriceValentineBear, actPriceValentineBear);
 
-        String expTotalAmount = "Total: 116.9";
+        actStuffedFrog = actStuffedFrog.substring(1);
+        actFluffyBunny = actFluffyBunny.substring(1);
+        actValentineBear = actValentineBear.substring(1);
+
+
+        String expTotalAmount = String.valueOf(Float.parseFloat(actStuffedFrog) + Float.parseFloat(actFluffyBunny) + Float.parseFloat(actValentineBear));
         WebElement totalCheckout = driver.findElement(By.xpath("/html/body/div[2]/div/form/table/tfoot/tr[1]/td/strong"));
         String actTotalAmount = totalCheckout.getText();
+        actTotalAmount = actTotalAmount.substring(7);
+        System.out.println("StuffedFrog " + actStuffedFrog + "FluffyBunny" + actFluffyBunny + "ValentineBear" + actValentineBear );
         System.out.println("Total Checkout Amount is : " + actTotalAmount);
+        System.out.println("Total Checkout Amount is through expected total: " + expTotalAmount);
         Assert.assertEquals(expTotalAmount, actTotalAmount);
 
     }

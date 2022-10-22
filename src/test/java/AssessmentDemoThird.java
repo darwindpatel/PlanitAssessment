@@ -12,12 +12,14 @@ public class AssessmentDemoThird {
     @Test
     public void thirdTestCase() {
             System.setProperty("webdriver.chrome.driver", "/Users/darwinpatel/Desktop/Apps/Chromdriver/chromedriver");
-            WebDriver driver = new ChromeDriver();
-            driver.manage().window().maximize();
-            driver.get("http://jupiter.cloud.planittesting.com");
-            driver.findElement(By.linkText("Shop")).click();
+            WebDriver driver = new ChromeDriver();  //initialize chrome
+            driver.manage().window().maximize();    //maximize window
+
+            driver.get("http://jupiter.cloud.planittesting.com");   //visit the URL
+            driver.findElement(By.linkText("Shop")).click();        //click on Shop
             driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
+            //add the products to the cart as required
             int item;
             for(item=0;item<2;item++) {
                 driver.findElement(By.xpath("/html/body/div[2]/div/ul/li[2]/div/p/a")).click();
@@ -31,34 +33,37 @@ public class AssessmentDemoThird {
                 driver.findElement(By.xpath("/html/body/div[2]/div/ul/li[7]/div/p/a")).click();
             }
 
-            driver.findElement(By.partialLinkText("Cart")).click();
+            driver.findElement(By.partialLinkText("Cart")).click(); //visit the cart using partialLinkText
 
-        //expected error text
 
-        String expPriceStuffedFrog = "$10.99";
-        expPriceStuffedFrog = expPriceStuffedFrog.substring(1);
+        //**************StuffedFrog**************
+        String expPriceStuffedFrog = "$10.99";  //expected text
+        expPriceStuffedFrog = expPriceStuffedFrog.substring(1); //removing the $ sign
+
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
         WebElement quantitySF = driver.findElement(By.xpath("/html/body/div[2]/div/form/table/tbody/tr[1]/td[3]/input"));
-        String quantityStuffedFrog = quantitySF.getAttribute("value");
-        String expStuffedFrog = String.valueOf(Float.parseFloat(expPriceStuffedFrog) * Float.parseFloat(quantityStuffedFrog));
-        //identify actual error message
+        String quantityStuffedFrog = quantitySF.getAttribute("value");  //grab the quantity
+        String expStuffedFrog = String.valueOf(Float.parseFloat(expPriceStuffedFrog) * Float.parseFloat(quantityStuffedFrog));  //calculate the subtotal
+
         WebElement totalStuffedFrog = driver.findElement(By.xpath("/html/body/div[2]/div/form/table/tbody/tr[1]/td[4]"));
         WebElement priceStuffedFrog = driver.findElement(By.xpath("/html/body/div[2]/div/form/table/tbody/tr[1]/td[2]"));
 
-        String actStuffedFrog = totalStuffedFrog.getText();
-        String actPriceStuffedFrog = priceStuffedFrog.getText();
+        String actStuffedFrog = totalStuffedFrog.getText(); //grab the subtotal
+        String actPriceStuffedFrog = priceStuffedFrog.getText();    //grab the price
 
-        System.out.println("Stuffed Frog subtotal is: " + actStuffedFrog);
         System.out.println("Stuffed Frog price is: " + actPriceStuffedFrog);
+        System.out.println("Stuffed Frog subtotal is: " + actStuffedFrog);
 
-        //verify error message with Assertion
-        expStuffedFrog = "$"+expStuffedFrog;
+        // Assertion
+        expStuffedFrog = "$"+expStuffedFrog;    //concatenating the dollar sign back to validate with actual string
         Assert.assertEquals(expStuffedFrog, actStuffedFrog);
-        expPriceStuffedFrog = "$"+expPriceStuffedFrog;
+        expPriceStuffedFrog = "$"+expPriceStuffedFrog;  //concatenating the dollar sign back to validate with actual string
         Assert.assertEquals(expPriceStuffedFrog, actPriceStuffedFrog);
+        //**************StuffedFrog**************
 
-        //expected error text
-        String expPriceFluffyBunny = "$9.99";
+        //**************FluffyBunny**************
+        String expPriceFluffyBunny = "$9.99";   //expected text
         expPriceFluffyBunny = expPriceFluffyBunny.substring(1);
 
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -67,7 +72,6 @@ public class AssessmentDemoThird {
         float floatRounding = (float) (Math.round(Float.parseFloat(expPriceFluffyBunny) * Float.parseFloat(quantityFluffyBunny) * 100.0) / 100.0);
         String expFluffyBunny = String.valueOf(floatRounding);
 
-        //identify actual error message
         WebElement totalFluffyBunny = driver.findElement(By.xpath("/html/body/div[2]/div/form/table/tbody/tr[2]/td[4]"));
         WebElement priceFluffyBunny = driver.findElement(By.xpath("/html/body/div[2]/div/form/table/tbody/tr[2]/td[2]"));
 
@@ -82,8 +86,9 @@ public class AssessmentDemoThird {
         Assert.assertEquals(expFluffyBunny, actFluffyBunny);
         expPriceFluffyBunny = "$"+expPriceFluffyBunny;
         Assert.assertEquals(expPriceFluffyBunny, actPriceFluffyBunny);
+        //**************FluffyBunny**************
 
-        //expected error text
+        //**************ValentineBear**************
         String expPriceValentineBear = "$14.99";
         expPriceValentineBear = expPriceValentineBear.substring(1);
 
@@ -107,9 +112,9 @@ public class AssessmentDemoThird {
         Assert.assertEquals(expValentineBear, actValentineBear);
         expPriceValentineBear = "$"+expPriceValentineBear;
         Assert.assertEquals(expPriceValentineBear, actPriceValentineBear);
+        //**************ValentineBear**************
 
         //Final checkout total
-
         actStuffedFrog = actStuffedFrog.substring(1);
         actFluffyBunny = actFluffyBunny.substring(1);
         actValentineBear = actValentineBear.substring(1);

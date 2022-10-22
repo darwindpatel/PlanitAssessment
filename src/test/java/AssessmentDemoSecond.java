@@ -12,10 +12,10 @@ public class AssessmentDemoSecond {
     @Test
     public void secondTestCase() {
             System.setProperty("webdriver.chrome.driver", "/Users/darwinpatel/Desktop/Apps/Chromdriver/chromedriver");
-            WebDriver driver = new ChromeDriver();
-            driver.manage().window().maximize();
-            driver.get("http://jupiter.cloud.planittesting.com");
-            driver.findElement(By.linkText("Contact")).click();
+            WebDriver driver = new ChromeDriver();  //initialize chrome browser
+            driver.manage().window().maximize();    //maximize window
+            driver.get("http://jupiter.cloud.planittesting.com");   //visit the URL
+            driver.findElement(By.linkText("Contact")).click();     //click on contact page using linkText
             driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
             //enter mandatory fields
@@ -25,16 +25,12 @@ public class AssessmentDemoSecond {
 
             driver.findElement(By.xpath("/html/body/div[2]/div/form/div/a")).click();
             driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        //expected error text
-        String exp = "Thanks Darvin Patel, we appreciate your feedback.";
-        //identify actual error message
-        WebElement message = driver.findElement(By.className("alert-success"));
-        String act = message.getText();
-        System.out.println("Message is: " + act);
-        //verify error message with Assertion
-        Assert.assertEquals(exp, act);
 
-
+            String exp = "Thanks Darvin Patel, we appreciate your feedback.";    //expected error text
+            WebElement message = driver.findElement(By.className("alert-success")); //identify actual error message
+            String act = message.getText();
+            System.out.println("Message is: " + act);
+            Assert.assertEquals(exp, act);  //verify error message with Assertion
 
     }
 

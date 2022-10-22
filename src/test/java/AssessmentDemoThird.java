@@ -18,38 +18,54 @@ public class AssessmentDemoThird {
             driver.findElement(By.linkText("Shop")).click();
             driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
-            driver.findElement(By.xpath("/html/body/div[2]/div/ul/li[2]/div/p/a")).click();
-            driver.findElement(By.xpath("/html/body/div[2]/div/ul/li[2]/div/p/a")).click();
+            int item;
+            for(item=0;item<2;item++) {
+                driver.findElement(By.xpath("/html/body/div[2]/div/ul/li[2]/div/p/a")).click();
+            }
 
-            driver.findElement(By.xpath("/html/body/div[2]/div/ul/li[4]/div/p")).click();
-            driver.findElement(By.xpath("/html/body/div[2]/div/ul/li[4]/div/p")).click();
-            driver.findElement(By.xpath("/html/body/div[2]/div/ul/li[4]/div/p")).click();
-            driver.findElement(By.xpath("/html/body/div[2]/div/ul/li[4]/div/p")).click();
-            driver.findElement(By.xpath("/html/body/div[2]/div/ul/li[4]/div/p")).click();
+            for(item=0;item<5;item++) {
+                driver.findElement(By.xpath("/html/body/div[2]/div/ul/li[4]/div/p")).click();
+            }
 
-            driver.findElement(By.xpath("/html/body/div[2]/div/ul/li[7]/div/p/a")).click();
-            driver.findElement(By.xpath("/html/body/div[2]/div/ul/li[7]/div/p/a")).click();
-            driver.findElement(By.xpath("/html/body/div[2]/div/ul/li[7]/div/p/a")).click();
+            for(item=0;item<3;item++) {
+                driver.findElement(By.xpath("/html/body/div[2]/div/ul/li[7]/div/p/a")).click();
+            }
+
             driver.findElement(By.partialLinkText("Cart")).click();
 
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         //expected error text
-        String expStuffedFrog = "$21.98";
+
         String expPriceStuffedFrog = "$10.99";
+        expPriceStuffedFrog = expPriceStuffedFrog.substring(1);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        WebElement quantitySF = driver.findElement(By.xpath("/html/body/div[2]/div/form/table/tbody/tr[1]/td[3]/input"));
+        String quantityStuffedFrog = quantitySF.getAttribute("value");
+        String expStuffedFrog = String.valueOf(Float.parseFloat(expPriceStuffedFrog) * Float.parseFloat(quantityStuffedFrog));
         //identify actual error message
         WebElement totalStuffedFrog = driver.findElement(By.xpath("/html/body/div[2]/div/form/table/tbody/tr[1]/td[4]"));
         WebElement priceStuffedFrog = driver.findElement(By.xpath("/html/body/div[2]/div/form/table/tbody/tr[1]/td[2]"));
+
         String actStuffedFrog = totalStuffedFrog.getText();
         String actPriceStuffedFrog = priceStuffedFrog.getText();
+
         System.out.println("Stuffed Frog subtotal is: " + actStuffedFrog);
         System.out.println("Stuffed Frog price is: " + actPriceStuffedFrog);
+
         //verify error message with Assertion
+        expStuffedFrog = "$"+expStuffedFrog;
         Assert.assertEquals(expStuffedFrog, actStuffedFrog);
+        expPriceStuffedFrog = "$"+expPriceStuffedFrog;
         Assert.assertEquals(expPriceStuffedFrog, actPriceStuffedFrog);
 
         //expected error text
-        String expFluffyBunny = "$49.95";
         String expPriceFluffyBunny = "$9.99";
+        expPriceFluffyBunny = expPriceFluffyBunny.substring(1);
+
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        WebElement quantityFB = driver.findElement(By.xpath("/html/body/div[2]/div/form/table/tbody/tr[2]/td[3]/input"));
+        String quantityFluffyBunny = quantityFB.getAttribute("value");
+        float floatRounding = (float) (Math.round(Float.parseFloat(expPriceFluffyBunny) * Float.parseFloat(quantityFluffyBunny) * 100.0) / 100.0);
+        String expFluffyBunny = String.valueOf(floatRounding);
 
         //identify actual error message
         WebElement totalFluffyBunny = driver.findElement(By.xpath("/html/body/div[2]/div/form/table/tbody/tr[2]/td[4]"));
@@ -60,24 +76,39 @@ public class AssessmentDemoThird {
 
         System.out.println("Fluffy Bunny subtotal is: " + actFluffyBunny);
         System.out.println("Fluffy Bunny price is: " + actPriceFluffyBunny);
+
         //verify error message with Assertion
+        expFluffyBunny = "$"+expFluffyBunny;
         Assert.assertEquals(expFluffyBunny, actFluffyBunny);
+        expPriceFluffyBunny = "$"+expPriceFluffyBunny;
         Assert.assertEquals(expPriceFluffyBunny, actPriceFluffyBunny);
 
         //expected error text
-        String expValentineBear = "$44.97";
         String expPriceValentineBear = "$14.99";
+        expPriceValentineBear = expPriceValentineBear.substring(1);
+
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        WebElement quantityVB = driver.findElement(By.xpath("/html/body/div[2]/div/form/table/tbody/tr[3]/td[3]/input"));
+        String quantityValentineBear = quantityVB.getAttribute("value");
+        String expValentineBear = String.valueOf(Float.parseFloat(expPriceValentineBear) * Float.parseFloat(quantityValentineBear));
+
         //identify actual error message
         WebElement totalValentineBear = driver.findElement(By.xpath("/html/body/div[2]/div/form/table/tbody/tr[3]/td[4]"));
         WebElement priceValentineBear = driver.findElement(By.xpath("/html/body/div[2]/div/form/table/tbody/tr[3]/td[2]"));
 
         String actValentineBear = totalValentineBear.getText();
         String actPriceValentineBear = priceValentineBear.getText();
+
         System.out.println("Valentine Bear subtotal is: " + actValentineBear);
         System.out.println("Valentine Bear price is: " + actPriceValentineBear);
+
         //verify error message with Assertion
+        expValentineBear = "$"+expValentineBear;
         Assert.assertEquals(expValentineBear, actValentineBear);
+        expPriceValentineBear = "$"+expPriceValentineBear;
         Assert.assertEquals(expPriceValentineBear, actPriceValentineBear);
+
+        //Final checkout total
 
         actStuffedFrog = actStuffedFrog.substring(1);
         actFluffyBunny = actFluffyBunny.substring(1);
@@ -88,9 +119,8 @@ public class AssessmentDemoThird {
         WebElement totalCheckout = driver.findElement(By.xpath("/html/body/div[2]/div/form/table/tfoot/tr[1]/td/strong"));
         String actTotalAmount = totalCheckout.getText();
         actTotalAmount = actTotalAmount.substring(7);
-        System.out.println("StuffedFrog " + actStuffedFrog + "FluffyBunny" + actFluffyBunny + "ValentineBear" + actValentineBear );
         System.out.println("Total Checkout Amount is : " + actTotalAmount);
-        System.out.println("Total Checkout Amount is through expected total: " + expTotalAmount);
+        System.out.println("Total Checkout Amount through expected total: " + expTotalAmount);
         Assert.assertEquals(expTotalAmount, actTotalAmount);
 
     }
